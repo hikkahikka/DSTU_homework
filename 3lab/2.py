@@ -24,12 +24,11 @@ for i in range(n):
 print('_'*20)
 
 for i in range(n):
-    for j in range(m):
-        if ((j%2)+1!=0):
-            for k in range(n-1):
-                for l in range(n-1):
-                    if (mass[l][j]>mass[l+1][j]):
-                        mass[l][j], mass[l+1][j]=mass[l+1][j], mass[l][j]
+    for j in range(0, m, 2):
+        for k in range(n-1):
+            for l in range(n-1-k):
+                if (mass[l][j]>mass[l+1][j]):
+                    mass[l][j], mass[l+1][j]=mass[l+1][j], mass[l][j]
 for i in range(n):
     for j in range(m):
         print(mass[i][j], end = ' ')
