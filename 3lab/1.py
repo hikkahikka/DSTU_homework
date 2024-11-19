@@ -16,9 +16,6 @@ mass = [[0]*m for i in range (n)]
 for i in range(n):
     for j in range(m):
         mass[i][j]= randint(1,9)
-
-for i in range(n):
-    for j in range(m):
         print(mass[i][j], end = ' ')
     print()
     
