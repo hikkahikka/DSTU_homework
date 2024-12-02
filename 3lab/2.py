@@ -10,23 +10,23 @@ while 1:
     except ValueError:
         print('Invalid data type!!!')
 
-mass = [[0]*m for i in range (n)]
+mass = [[0]*n for i in range (m)]
 
-for i in range(n):
-    for j in range(m):
+for i in range(m):
+    for j in range(n):
         mass[i][j]= randint(1,9)
         print(mass[i][j], end = ' ')
     print()
 
 print('_'*20)
 
-for i in range(n):
-    for j in range(0, m, 2):
-        for k in range(n-1):
-            for l in range(n-1-k):
+for i in range(m):
+    for j in range(0, n, 2):
+        for k in range(m-1):
+            for l in range(m-1-k):
                 if (mass[l][j]>mass[l+1][j]):
                     mass[l][j], mass[l+1][j]=mass[l+1][j], mass[l][j]
-for i in range(n):
-    for j in range(m):
+for i in range(m):
+    for j in range(n):
         print(mass[i][j], end = ' ')
     print()

@@ -24,4 +24,4 @@ dic = {}
 
 for i in range(a):
     dic[mass1[i]]=mass2[i]
-print(*dic)
+print(dic)
