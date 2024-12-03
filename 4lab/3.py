@@ -5,6 +5,8 @@ def Palindrom(s, a):
         return False
     
     return Palindrom(s, a+1)
-    
-s = input('Input string: ')
-print(Palindrom(s,0))
+
+
+for i in range(5):
+    s = input('Input string: ')
+    print(Palindrom(s,0))
