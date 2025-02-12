@@ -3,11 +3,20 @@
 
 #include <iostream>
 #include <cmath>
+#include <string>
+
 using namespace std;
 int main()
 {
-    double x,y;
+    double x, y;
+    cout << "input x: ";
+
     cin >> x;
+    if (cin.fail() || cin.peek() != '\n')
+    {
+        cout << "Bad input, bb";
+        return -1;
+    }
     if (x < -2) {
         y = (2 + cos(pow(x, 3) + 3)) / (4 + pow(x, 2));
     }
