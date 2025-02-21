@@ -21,9 +21,17 @@ int main()
         y = (2 + cos(pow(x, 3) + 3)) / (4 + pow(x, 2));
     }
     else if (-2 <= x && x < 3) {
+        if (2 * pow(x, 2) + pow(x, 3) == 0) {
+            cout << "0 division error";
+            return -1;
+        }
         y = (2 - exp(-2 * x)) / (2 * pow(x, 2) + pow(x, 3));
     }
     else {
+        if ((5 * pow(x, 2) - 2) == 0) {
+            cout << "0 division error";
+            return -1;
+        }
         y = (cos(pow(x, 2) + 5 * x)) / (5 * pow(x, 2) - 2);
     }
     cout << y;
