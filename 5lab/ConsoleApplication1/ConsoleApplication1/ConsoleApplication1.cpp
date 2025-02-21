@@ -13,7 +13,8 @@ int main()
         cout << "Bad input, bb";
         return -1;
     }
-    cout << pow(z, y) << pow(y, z);
-    float x = -1 * pow(z, y) + pow(y, z);
+
+    int x = -1 * pow(z, y) + pow(y, z);
     cout << x;
 }
+
