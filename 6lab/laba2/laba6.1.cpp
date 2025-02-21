@@ -18,7 +18,7 @@ int main()
     std::cout << std::endl << "Girls: ";
     for (int i = 0; i < girls_value; ++i) {
         *(girls + i) = rand() % 31 + 150;
-        std::cout << *(girls + i)<<" ";
+        std::cout << *(girls + i) << " ";
     }
     std::cout << "Girls - " << girls_value;
 
