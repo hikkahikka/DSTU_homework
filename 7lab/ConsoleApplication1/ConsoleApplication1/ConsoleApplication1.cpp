@@ -13,7 +13,7 @@ int main()
     std::cout << "Input n:\n";
     std::cin >> n;
 
-    if (std::cin.fail() || std::cin.peek() != '\n')
+    if (std::cin.fail() || std::cin.peek() != '\n' || n<1)
     {
         std::cout << "Bad input, bb";
         return -1;
@@ -26,15 +26,15 @@ int main()
         min_abs = std::min(min_abs, abs(numbers[i]));
         if (numbers[i] > 0) {
             posit++;
-            
+
         }
-        if (posit <= 2 && posit>0) {
+        if (posit <= 2 && posit > 0) {
             summ += numbers[i];
         }
         std::cout << numbers[i]<<" ";
 
     }
-    std::cout << "\n"<<min_abs<<" "<<summ<< "\n";
+    std::cout << "\nMin abs "<<min_abs<<" Summ "<<summ<< "\n";
 
     int* change = new int[n];
 
@@ -46,6 +46,11 @@ int main()
         k += 2;
     }
     for (int i = 0; i < n; i++) {
-        std::cout << change[i] << " ";
+        numbers[i] = change[i];
+        
+        std::cout << numbers[i] << " ";
     }
+    delete[]change;
+    delete[]numbers;
+
 }
