@@ -9,9 +9,17 @@ int Combin2(int n, int k, int** mass) {
     //cout << n << ' ' << k << endl;
     int b = Combin2(n - 1, k, mass) + Combin2(n - 1, k - 1, mass);
     if (mass[n][k] == 0) {
-        mass[n][k]=b;
+        mass[n][k] = b;
     }
     return b;
+}
+int Check(int n, int k) {
+    if (cin.fail() || cin.peek() != '\n' || n > 20 || n < 0 || 0 >k || k> n)
+    {
+        cout << "falal error";
+        return -1;
+    }
+    return 1;
 }
 int main()
 {
@@ -19,11 +27,11 @@ int main()
     int n, k;
     cout << "Input n: " << "\n";
     cin >> n;
-    if (cin.fail() || cin.peek() != '\n' || n>20||n<0)
-    {
-        cout << "Bad input, poka";
+    if (Check(n, 0) == -1) {
+        
         return -1;
     }
+
     int** mass = new int*[20];
     for (int i = 0; i < 20; i++) {
         mass[i] = new int[20];
@@ -32,7 +40,8 @@ int main()
         }
     }
     for (int i = 0; i < 5; i++) {
-        k = rand()%(n+1);
+        cin>>k;
+        if (Check(n, k) == -1) return -1;
         cout <<"n " << n<< " k " << k << endl;
         cout<<Combin2(n, k, mass)<<endl;
     }
