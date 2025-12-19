@@ -8,4 +8,5 @@ namespace Geometry{
 
     double triangleArea(double base, double height); 
     double trianglePerimeter(double a, double b, double c);  
-    }
+    void compireSquare(double a, double b);    
+}

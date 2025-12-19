@@ -1,4 +1,5 @@
 #include "geometry.h"
+#include <iostream>
 namespace Geometry{
     double squareArea(double side) {
         return side * side;
@@ -6,11 +7,7 @@ namespace Geometry{
 
     double squarePerimeter(double side) {
         return 4 * side;
-<<<<<<< HEAD
-        //vetka main
-=======
         //vetka tst
->>>>>>> test
     }
 
     double circleArea(double radius) {
@@ -27,5 +24,17 @@ namespace Geometry{
 
     double trianglePerimeter(double a, double b, double c) {
         return a + b + c;
+    }
+    void compireSquare(double a, double b){
+        if(a<b){
+            std::cout<<"first smaller";
+            return ;
+        }
+        else if (a>b){
+            std::cout<<"first bigger";
+            return ;
+
+        }
+        std::cout<<"equal";
     }
 }
