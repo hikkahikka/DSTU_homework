@@ -6,7 +6,11 @@ namespace Geometry{
 
     double squarePerimeter(double side) {
         return 4 * side;
+<<<<<<< HEAD
         //vetka main
+=======
+        //vetka tst
+>>>>>>> test
     }
 
     double circleArea(double radius) {
