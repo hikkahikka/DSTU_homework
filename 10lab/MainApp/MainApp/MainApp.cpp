@@ -8,6 +8,10 @@ int main()
         cin >> n;
     } while (CheckInput(n, 0, 10) != 1);
     trains = InputTrainToVector(n);
+    cout << "Write start point" << endl;
+    cout << "Write end point" << endl;
+
+    /*cout << "Write number to get info about train" << endl;
     cout << "If you want to exit input \"-1\"" << endl;
     int ch;
     while (1) {
@@ -16,6 +20,12 @@ int main()
         if (ch == -1) break;
         GetInfoAboutTrain(ch, trains);
     }
-    cout << "GoodBye" << endl;
+    cout << "Do you want to save info in file? (0-no, 1-yes)" << endl;
+    cin >> ch;
+    if (ch == 1) {
+        WriteToFile(trains, "info.txt");
+    }*/
+
+   
 
 }

@@ -43,6 +43,16 @@ Train AddTrain() {
     } while (CheckInput(data, 0, 59) != 1);
     train.time.tm_min = data;    
 
+    cout << "enter start point: " << endl;
+    string p;
+    cin >> p;
+    train.start = p; 
+
+    cout << "enter end point: " << endl;
+    cin >> p;
+    train.end = p;
+
+
     return train;
 }
 vector<Train> InputTrainToVector(int n) {
@@ -77,10 +87,32 @@ void GetInfoAboutTrain(int n, vector<Train> trains) {
             cout << trains[i].name << endl;
             cout << trains[i].number << endl;
             cout << trains[i].time.tm_year+1900 <<"." << trains[i].time.tm_mon+1 << "." << trains[i].time.tm_mday << "\t" << trains[i].time.tm_hour << ":" << trains[i].time.tm_min << endl << endl;
+            cout << "Start: " << trains[i].start << endl;
+            cout << "End: " << trains[i].end << endl;
         }
     }
     if (!fl) {
         cout << "No train with this number"<<endl;
     }
 }
+
+void WriteToFile(vector <Train> trains, string path) {
+    std::ofstream file(path);
+    if (file.is_open()) {
+        file << "Number\tName\tTime" << endl;
+        for (Train train : trains) {
+            file << train.number << "\t";
+            file << train.name << "\t";
+            file << train.time.tm_year +1900<< " "<<train.time.tm_mon+1<<" "<<
+                train.time.tm_mday<<" "<<train.time.tm_hour<<" "<<train.time.tm_min<<endl;
+        }
+        file.close();
+    }
+}
+
+
+
+
+
+
 
