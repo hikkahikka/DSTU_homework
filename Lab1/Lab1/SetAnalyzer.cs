@@ -21,7 +21,7 @@ namespace Lab1
             {
                 _engAlphabet.Add(Convert.ToChar(i));
             }
-            for (int i = 101;  i <=110; i++)
+            for (int i = 69;  i <=78; i++)
             {
                 _sequence.Add(Convert.ToChar(i));
             }
@@ -61,7 +61,8 @@ namespace Lab1
             {
                 Console.Write(c);
             }
-            Console.WriteLine();
+            Console.WriteLine(  );
+            Console.WriteLine("Size of set "+result.Count);
         }
     }
 }
