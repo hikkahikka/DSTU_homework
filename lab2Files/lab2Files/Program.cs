@@ -46,7 +46,7 @@ void Task1()
     while (true)
     {
         ans = Console.ReadLine();
-        if (CheckValue(ans, out k)) break;
+        if (CheckValue(ans, out k) && k > 0) break;
         else
         {
             Console.WriteLine("Input correct value!!!");
