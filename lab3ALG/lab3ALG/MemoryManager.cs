@@ -1,0 +1,181 @@
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.Linq;
+using System.Net;
+using System.Net.Http.Headers;
+using System.Runtime.InteropServices;
+using System.Runtime.Serialization.Formatters;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace lab3ALG
+{
+    public class MemoryManager
+    {
+        private MemorySegment[] segments;
+
+        public MemoryManager(int segment0Size, int segment1Size)
+        {
+            segments = new MemorySegment[2]
+            {
+                new MemorySegment(segment0Size),
+                new MemorySegment(segment1Size)
+            };
+        }
+        private int FindFreeBlock(int segmentIndex, int size)
+        {
+            int address = -1;
+            int free = 0;
+            for (int i= 0;  i < segments[segmentIndex].Size; i++)
+            {
+                if (!segments[segmentIndex].IsUsed[i])
+                {
+                    free++;
+                    if(free == size)
+                    {
+                        address = i - free + 1;
+                        return address;
+                    }
+                }
+                else
+                {
+                    free = 0;
+                }
+            }
+            return address;
+        }
+        private void MarkBlockAsFree(int segmentIndex, int address, int size)
+        {
+            for(int i = address; i<address+size; i++)
+            {
+                segments[segmentIndex].IsUsed[i] = false;
+            }
+        }
+        private void MarkBlockAsUsed(int segmentIndex, int address, int size)
+        {
+            for (int i = address; i < address + size; i++)
+            {
+                segments[segmentIndex].IsUsed[i] = true;
+            }
+        }
+        public Pointer NewPointer(Type dataType, int count = 1)
+        {
+            Pointer ptr = new Pointer();
+            ptr.DataType = dataType;
+            int size = Marshal.SizeOf(dataType)*count;
+            for (int i = 0; i < segments.Length; i++)
+            {
+                int address = FindFreeBlock(i, size);
+                if (address == -1) continue;
+                else
+                {
+                    ptr.SegmentIndex = i;
+                    ptr.Address = address;
+                    ptr.IsNull = false;
+                    ptr.BlockSize = size;
+                    MarkBlockAsUsed(i, address, size);
+                    return ptr;
+                }
+            }
+            Console.WriteLine("Low memory in both segments");
+            return ptr;
+        }
+        public void WritePointer(Pointer ptr, int value)
+        {
+            if (ptr.IsNull)
+            {
+                Console.WriteLine("The pointer is null");
+                return;
+            }
+            byte[] bytes = BitConverter.GetBytes(value);
+            for (int i = 0; i < bytes.Length; i++)
+            {
+                segments[ptr.SegmentIndex].Data[ptr.Address + i] = bytes[i];
+            }
+
+            //cw memory has been writed
+        }
+        public void WritePointer(Pointer ptr, double value)
+        {
+            if (ptr.IsNull)
+            {
+                Console.WriteLine("The pointer is null");
+                return;
+            }
+            byte[] bytes = BitConverter.GetBytes(value);
+            for (int i = 0; i < bytes.Length; i++)
+            {
+                segments[ptr.SegmentIndex].Data[ptr.Address + i] = bytes[i];
+            }
+
+            //cw memory has been writed
+        }
+        public int ReadPointerInt(Pointer ptr)
+        {
+            if (ptr.IsNull)
+            {
+                Console.WriteLine("The pointer is null");
+                return 0;
+            }
+            byte[] bytes = new byte[sizeof(int)];
+            for (int i = 0; i < sizeof(int); i++)
+            {
+                bytes[i] = segments[ptr.SegmentIndex].Data[ptr.Address + i];
+            }
+            return BitConverter.ToInt32(bytes);
+        }
+        public double ReadPointerDouble(Pointer ptr)
+        {
+            if (ptr.IsNull)
+            {
+                Console.WriteLine("The pointer is null");
+                return 0;
+            }
+            byte[] bytes = new byte[sizeof(double)];
+            for (int i = 0; i < sizeof(double); i++)
+            {
+                bytes[i] = segments[ptr.SegmentIndex].Data[ptr.Address + i];
+            }
+            return BitConverter.ToDouble(bytes);
+        }
+        public void SetPointer(Pointer a, Pointer b)
+        {
+            if (a.IsNull || b.IsNull)
+            {
+                Console.WriteLine("One of the pointers is null");
+                return;
+            }
+            if (a.DataType != b.DataType)
+            {
+                Console.WriteLine("The data types don't match");
+                return;
+            }
+            int size = Marshal.SizeOf(a.DataType);
+            for (int i = 0; i < size; i++)
+            {
+                segments[a.SegmentIndex].Data[a.Address + i] =
+                    segments[b.SegmentIndex].Data[b.Address + i];
+            }
+        }
+        public void FreePointer(ref Pointer ptr)
+        {
+            if (ptr.IsNull)
+            {
+                Console.WriteLine("The pointer is null already");
+                return;
+            }
+            int size = ptr.BlockSize;
+            for (int i = 0; i<size; i++)
+            {
+                segments[ptr.SegmentIndex].Data[ptr.Address + i] = 0;
+            }
+            MarkBlockAsFree(ptr.SegmentIndex, ptr.Address, size);
+            ptr.Address = 0;
+            ptr.SegmentIndex = 0;
+            ptr.IsNull = true;
+            ptr.DataType = null;
+            ptr.BlockSize = 0;
+        }
+    }
+}
