@@ -70,12 +70,7 @@ namespace lab3ALG
                 if (address == -1) continue;
                 else
                 {
-                    ptr.SegmentIndex = i;
-                    ptr.Address = address;
-                    ptr.IsNull = false;
-                    ptr.BlockSize = size;
-                    MarkBlockAsUsed(i, address, size);
-                    return ptr;
+                    ptr.AD
                 }
             }
             Console.WriteLine("Low memory in both segments");

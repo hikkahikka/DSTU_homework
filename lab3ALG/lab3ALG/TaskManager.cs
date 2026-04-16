@@ -196,7 +196,7 @@ namespace lab3ALG
                         Console.WriteLine("Bye");
                         return;
                     default:
-                        Console.WriteLine("Incorrect choise");
+                        Console.WriteLine("Incorrect choiсe");
                         break;
                 }
             }
