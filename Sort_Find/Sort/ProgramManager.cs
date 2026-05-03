@@ -4,7 +4,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.IO;  // остаётся для File (раньше был для StreamWriter)
+using System.IO; 
 
 namespace Sort
 {

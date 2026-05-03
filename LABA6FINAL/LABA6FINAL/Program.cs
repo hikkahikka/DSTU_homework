@@ -5,18 +5,17 @@ class Program
 {
     static void Main()
     {
-        int n = Program.ReadInt("Enter number of elements: ", 1, int.MaxValue);
+        int n = ReadInt("Enter number of elements: ", 1, int.MaxValue);
 
         int[] source = new int[n];
 
         for (int i = 0; i < n; i++)
         {
-            source[i] = Program.ReadInt($"Enter element {i}: ");
+            source[i] = ReadInt($"Enter element {i}: ");
         }
 
-        int p0 = Program.ReadInt("Enter P0 index: ", 0, n - 1);
-        int k = Program.ReadInt("Enter K: ", 1, int.MaxValue);
-
+        int p0 = ReadInt("Enter P0 index: ", 0, n - 1);
+        int k = ReadInt("Enter K: ", 1, int.MaxValue);
         LinkedListStructure linkedList = new LinkedListStructure();
 
         for (int i = 0; i < n; i++)
