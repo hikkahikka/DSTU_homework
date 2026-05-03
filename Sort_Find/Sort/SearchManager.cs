@@ -57,23 +57,27 @@ namespace Sort
             int right = sortedArray.Length - 1;
 
             Stopwatch sw = Stopwatch.StartNew();
+
             while (left <= right)
             {
-                met.Comparisons++;
                 int mid = left + (right - left) / 2;
+
+                met.Comparisons++;
                 if (sortedArray[mid] == key)
                 {
                     sw.Stop();
                     met.Time = sw.Elapsed;
                     return met;
                 }
-                else if (sortedArray[mid] < key)
+
+                met.Comparisons++;
+                if (sortedArray[mid] < key)
                     left = mid + 1;
                 else
                     right = mid - 1;
             }
-            sw.Stop();
 
+            sw.Stop();
             met.Time = sw.Elapsed;
             return met;
         }

@@ -204,11 +204,12 @@ namespace Sort
             }
 
             string tableText = TablePrinter.GetBarrierComparisonTableString(results);
-            Console.Write(tableText);
+            //Console.Write(tableText);
 
             string filePath = "barrier_comparison.txt";
             File.WriteAllText(filePath, tableText);
             Console.WriteLine($"Data saved to {filePath}");
+            TablePrinter.CreateBarrierGraphHtml(results, "barrier_graph.html");
         }
 
         private void RunSortedSearchResearch()
@@ -223,43 +224,51 @@ namespace Sort
                 int size = sizes[idx];
                 int[] sortedArray = ArrayGenerator.SortedArray(size);
 
-                int[] targets = new int[100];
-                for (int i = 0; i < 100; i++)
-                {
-                    if (rand.Next(2) == 0)
-                        targets[i] = sortedArray[rand.Next(size)];
-                    else
-                        targets[i] = 100000 + rand.Next(0, 1000);
-                }
+                long totalCompLinearFound = 0;
+                double totalMicrosLinearFound = 0;
+                long totalCompBinaryFound = 0;
+                double totalMicrosBinaryFound = 0;
 
-                long totalCompLinear = 0;
-                double totalMicrosLinear = 0;
-                long totalCompBinary = 0;
-                double totalMicrosBinary = 0;
+                long totalCompLinearMissing = 0;
+                double totalMicrosLinearMissing = 0;
+                long totalCompBinaryMissing = 0;
+                double totalMicrosBinaryMissing = 0;
 
                 for (int i = 0; i < 100; i++)
                 {
-                    var mLin = SearchManager.LinearSearch(sortedArray, targets[i]);
-                    totalCompLinear += mLin.Comparisons;
-                    totalMicrosLinear += mLin.Time.TotalMilliseconds * 1000.0;
+                    int foundTarget = sortedArray[rand.Next(size)];
+                    int missingTarget = 100000 + rand.Next(0, 1000);
 
-                    var mBin = SearchManager.BinarySearch(sortedArray, targets[i]);
-                    totalCompBinary += mBin.Comparisons;
-                    totalMicrosBinary += mBin.Time.TotalMilliseconds * 1000.0;
+                    var linearFound = SearchManager.LinearSearch(sortedArray, foundTarget);
+                    totalCompLinearFound += linearFound.Comparisons;
+                    totalMicrosLinearFound += linearFound.Time.TotalMilliseconds * 1000.0;
+
+                    var binaryFound = SearchManager.BinarySearch(sortedArray, foundTarget);
+                    totalCompBinaryFound += binaryFound.Comparisons;
+                    totalMicrosBinaryFound += binaryFound.Time.TotalMilliseconds * 1000.0;
+
+                    var linearMissing = SearchManager.LinearSearch(sortedArray, missingTarget);
+                    totalCompLinearMissing += linearMissing.Comparisons;
+                    totalMicrosLinearMissing += linearMissing.Time.TotalMilliseconds * 1000.0;
+
+                    var binaryMissing = SearchManager.BinarySearch(sortedArray, missingTarget);
+                    totalCompBinaryMissing += binaryMissing.Comparisons;
+                    totalMicrosBinaryMissing += binaryMissing.Time.TotalMilliseconds * 1000.0;
                 }
-
-                double avgCompLin = totalCompLinear / 100.0;
-                double avgTimeLin = totalMicrosLinear / 100.0;
-                double avgCompBin = totalCompBinary / 100.0;
-                double avgTimeBin = totalMicrosBinary / 100.0;
 
                 results[idx] = new SortedSearchResult
                 {
                     Size = size,
-                    LinearAvgComparisons = avgCompLin,
-                    LinearAvgTime = avgTimeLin,
-                    BinaryAvgComparisons = avgCompBin,
-                    BinaryAvgTime = avgTimeBin
+
+                    LinearFoundAvgComparisons = totalCompLinearFound / 100.0,
+                    LinearFoundAvgTime = totalMicrosLinearFound / 100.0,
+                    BinaryFoundAvgComparisons = totalCompBinaryFound / 100.0,
+                    BinaryFoundAvgTime = totalMicrosBinaryFound / 100.0,
+
+                    LinearMissingAvgComparisons = totalCompLinearMissing / 100.0,
+                    LinearMissingAvgTime = totalMicrosLinearMissing / 100.0,
+                    BinaryMissingAvgComparisons = totalCompBinaryMissing / 100.0,
+                    BinaryMissingAvgTime = totalMicrosBinaryMissing / 100.0
                 };
             }
 
